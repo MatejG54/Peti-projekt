@@ -1,11 +1,16 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import router from '@/router';
 import { useCounterStore } from '@/stores/counter';
 
 import {data} from '@/storage';
 
 const counterStore = useCounterStore();
+
+const getCount = computed(() => {
+  // console.log(counterStore.count)
+  return counterStore.count + 1;
+})
 
 const form = reactive({
     name: "",
@@ -50,22 +55,23 @@ const resetForm = () => {
 
 const addNewPlayer = (newP) => {
     return new Promise(resolve => {
-        console.log(data.players)
+        // console.log(data.players)
         data.players.push(newP);
-        console.log(data.players)
+        // console.log(data.players)
         resolve(data);
     })
 }
 
 const handleSubmit = async () => {
     const newPlayer = {
-        id: String(counterStore.count + 1),
+        id: String(getCount.value),
         name: form.name,
         surname: form.surname,
         club: form.club,
         position: form.position,
         country: form.country
     }
+    // console.log(getCount.value)
 
     await addNewPlayer(newPlayer);
     resetForm();
