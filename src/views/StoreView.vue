@@ -8,7 +8,6 @@ import {data} from '@/storage';
 const counterStore = useCounterStore();
 
 const getCount = computed(() => {
-  // console.log(counterStore.count)
   return counterStore.count + 1;
 })
 
@@ -64,7 +63,7 @@ const addNewPlayer = (newP) => {
 
 const handleSubmit = async () => {
     const newPlayer = {
-        id: String(getCount.value),
+        id: String(counterStore.count + 1),
         name: form.name,
         surname: form.surname,
         club: form.club,
